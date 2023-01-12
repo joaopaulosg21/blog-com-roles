@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import aprendendo.api.blog.exceptions.post.PostException;
 import aprendendo.api.blog.exceptions.user.UserException;
 
 @ControllerAdvice
@@ -30,6 +31,15 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler{
         Map<String,String> erros = ((UserException) exc).getError();
         return handleExceptionInternal(exc, erros, headers, BAD_REQUEST, req);
     }
+
+    @ExceptionHandler({PostException.class})
+    protected ResponseEntity<Object> postExceptionHandle(RuntimeException exc,WebRequest req) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(APPLICATION_JSON);
+        Map<String,String> erros = ((PostException) exc).getError();
+        return handleExceptionInternal(exc, erros, headers, BAD_REQUEST, req);
+    }
+
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exc,
