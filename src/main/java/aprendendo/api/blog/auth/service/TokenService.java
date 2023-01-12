@@ -30,4 +30,18 @@ public class TokenService {
         .compact();
     }
 
+    public boolean isValid(String token) {
+        try{
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            return true;
+        }catch(Exception exc) {
+            return false;
+        }
+    }
+
+    public long getIdFromToken(String token) {
+        long id = Long.valueOf(Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject());
+        return id;
+    }
+
 }

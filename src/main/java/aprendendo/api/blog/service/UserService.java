@@ -1,5 +1,6 @@
 package aprendendo.api.blog.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,9 @@ public class UserService {
         Authentication authentication = authenticationManager.authenticate(usernamePasswordToken);
         String token = tokenService.generate(authentication);
         return TokenDTO.builder().type("Bearer").token(token).build();
+    }
+
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream().map(x -> x.toDTO()).toList();
     }
 }
