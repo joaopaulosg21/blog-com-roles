@@ -33,6 +33,8 @@ public class Post {
 
     private LocalDate date;
 
+    private LocalDate updated;
+
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;

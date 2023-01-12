@@ -20,6 +20,8 @@ public class PostDTO {
 
     private User user;
 
+    private LocalDate updated;
+
     public UserDTO getUser() {
         return user.toDTO();
     }
