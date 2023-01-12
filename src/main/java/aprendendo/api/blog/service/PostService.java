@@ -69,4 +69,20 @@ public class PostService {
         }
         throw new PostException("Post com essa id não existe");
     }
+
+    public PostDTO deletePost(long postId,HttpHeaders headers) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if(optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            String token = UserTokenUtils.getTokenFromHeader(headers);
+            long id = tokenService.getIdFromToken(token);
+            User user = userRepository.findById(id).get();
+            if(user.getRole().getAuthority().equals("admin")) {
+                postRepository.delete(post);
+                return post.toDTO();
+            }
+            throw new UserException("User não tem autoridade para excluir posts");
+        }
+        throw new PostException("Post com essa id não existe");
+    }
 }

@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,5 +34,10 @@ public class PostController {
     public ResponseEntity<PostDTO> updatePost(@RequestBody UpdatePostDTO updatePost,
     @RequestParam(required = true,name = "id") long id,@RequestHeader HttpHeaders headers) {
         return ResponseEntity.ok(postService.updatePost(updatePost, id, headers));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<PostDTO> deletePost(@RequestHeader HttpHeaders headers,@RequestParam long id) {
+        return ResponseEntity.ok(postService.deletePost(id, headers));
     }
 }
