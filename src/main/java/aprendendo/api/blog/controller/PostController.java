@@ -3,13 +3,12 @@ package aprendendo.api.blog.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,18 +25,17 @@ public class PostController {
     PostService postService;
 
     @PostMapping("/add")
-    public ResponseEntity<PostDTO> addNewPost(@Valid @RequestBody Post post,@RequestHeader HttpHeaders headers) {
-        return ResponseEntity.ok(postService.addPost(post, headers));
+    public ResponseEntity<PostDTO> addNewPost(@Valid @RequestBody Post post,@AuthenticationPrincipal String username) {
+        return ResponseEntity.ok(postService.addPost(post, username));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<PostDTO> updatePost(@RequestBody UpdatePostDTO updatePost,
-    @RequestParam(required = true,name = "id") long id,@RequestHeader HttpHeaders headers) {
-        return ResponseEntity.ok(postService.updatePost(updatePost, id, headers));
+    public ResponseEntity<PostDTO> updatePost(@RequestBody UpdatePostDTO updatePost,@RequestParam(required = true,name = "id") long id) {
+        return ResponseEntity.ok(postService.updatePost(updatePost, id));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<PostDTO> deletePost(@RequestHeader HttpHeaders headers,@RequestParam long id) {
-        return ResponseEntity.ok(postService.deletePost(id, headers));
+    public ResponseEntity<PostDTO> deletePost(@RequestParam long id) {
+        return ResponseEntity.ok(postService.deletePost(id));
     }
 }

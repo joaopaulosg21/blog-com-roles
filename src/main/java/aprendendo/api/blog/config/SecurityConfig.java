@@ -37,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .antMatchers(HttpMethod.POST,"/user/create").permitAll()
         .antMatchers(HttpMethod.POST,"/user/login").permitAll()
         .antMatchers(HttpMethod.GET,"/user").hasAuthority("admin")
+        .antMatchers(HttpMethod.DELETE,"/post/delete").hasAuthority("admin")
+        .antMatchers(HttpMethod.PUT,"/post/update").hasAnyAuthority("editor","admin")
         .anyRequest().authenticated()
         .and()
         .csrf().disable()
