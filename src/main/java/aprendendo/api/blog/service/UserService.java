@@ -23,7 +23,7 @@ import aprendendo.api.blog.repository.UserRepository;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
